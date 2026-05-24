@@ -1,0 +1,40 @@
+program MeuPrograma
+
+declarations
+varType integer: idade, contador;
+varType real: salario;
+varType string: nome;
+varType boolean: ativo;
+endDeclararions
+
+functions
+funcType void: minhaFuncao(?)
+{
+    idade := 25;
+    salario := 1500.75;
+    nome := "JOAO";
+    ativo := true;
+
+    // comentario de linha para testar filtro futuro
+
+    if (idade >= 18)
+        print nome
+    else
+        print "MENOR"
+    endIf;
+
+    /*
+       comentario de bloco
+       ainda deve ser ignorado futuramente
+    */
+
+    while (contador < 10)
+        contador := contador + 1
+    endWhile;
+
+    return
+}
+endFunction
+endFunctions
+
+endProgram
