@@ -45,6 +45,7 @@ public class Main {
             System.out.println(" - " + tabPath);
         } catch (Exception e) {
             System.err.println("Erro ao executar o fluxo inicial: " + e.getMessage());
+            System.exit(1);
         }
     }
 
