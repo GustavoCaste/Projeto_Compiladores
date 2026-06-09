@@ -21,10 +21,14 @@ public class SymbolTableReportWriter {
             writer.newLine();
             writer.write("Componentes: ");
             writer.newLine();
+            writer.write("Contatos: ");
+            writer.newLine();
             writer.write("RELATORIO DA TABELA DE SIMBOLOS");
             writer.newLine();
             writer.newLine();
-            writer.write("Texto fonte analisado:");
+            writer.write("Nome do texto fonte analisado: " + sourceFile.getFileName());
+            writer.newLine();
+            writer.write("Conteudo do texto fonte analisado:");
             writer.newLine();
             writer.write(sourceContent == null ? "" : sourceContent);
             writer.newLine();
@@ -37,32 +41,17 @@ public class SymbolTableReportWriter {
                 writer.write("A tabela ainda nao possui simbolos registrados.");
                 writer.newLine();
             } else {
-                writer.write(String.format(
-                        "%-6s %-8s %-20s %-8s %-8s %-12s %-20s",
-                        "IDX",
-                        "CODIGO",
-                        "LEXEME",
-                        "ANTES",
-                        "DEPOIS",
-                        "TIPO",
-                        "LINHAS"
-                ));
-                writer.newLine();
-
                 for (SymbolEntry entry : symbols) {
                     String lines = entry.getLines().stream()
                             .map(String::valueOf)
                             .collect(Collectors.joining(","));
-                    writer.write(String.format(
-                            "%-6d %-8s %-20s %-8d %-8d %-12s %-20s",
-                            entry.getIndex(),
-                            entry.getCode(),
-                            entry.getLexeme(),
-                            entry.getCharsBeforeTrunc(),
-                            entry.getCharsAfterTrunc(),
-                            entry.getSymbolType(),
-                            lines
-                    ));
+                    writer.write("Entrada: " + entry.getIndex()
+                            + ", Codigo: " + entry.getCode()
+                            + ", Lexeme: " + entry.getLexeme()
+                            + ", QtdCharsAntesTrunc: " + entry.getCharsBeforeTrunc()
+                            + ", QtdCharDepoisTrunc: " + entry.getCharsAfterTrunc()
+                            + ", TipoSimb: " + entry.getSymbolType()
+                            + ", Linhas: (" + lines + ").");
                     writer.newLine();
                 }
             }

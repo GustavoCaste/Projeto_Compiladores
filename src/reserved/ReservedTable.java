@@ -25,48 +25,59 @@ public class ReservedTable {
     }
 
     private void initializeDefaults() {
-        // TODO: Revisar todos os codigos conforme Apendice A oficial da linguagem.
-        add("program", "A01");
-        add("declarations", "A02");
-        add("functions", "A03");
-        add("if", "A04");
-        add("else", "A05");
-        add("while", "A06");
-        add("return", "A07");
-        add("break", "A08");
-        add("print", "A09");
+        add("boolean", TokenCode.BOOLEAN);
+        add("break", TokenCode.BREAK);
+        add("character", TokenCode.CHARACTER);
+        add("declarations", TokenCode.DECLARATIONS);
+        add("else", TokenCode.ELSE);
+        add("endDeclararions", TokenCode.END_DECLARATIONS);
+        add("endDeclaracions", TokenCode.END_DECLARATIONS);
+        add("endDeclarations", TokenCode.END_DECLARATIONS);
+        add("endFunction", TokenCode.END_FUNCTION);
+        add("endFunctions", TokenCode.END_FUNCTIONS);
+        add("endIf", TokenCode.END_IF);
+        add("endif", TokenCode.END_IF);
+        add("endProgram", TokenCode.END_PROGRAM);
+        add("endWhile", TokenCode.END_WHILE);
+        add("false", TokenCode.FALSE);
+        add("functions", TokenCode.FUNCTIONS);
+        add("funcType", TokenCode.FUNC_TYPE);
+        add("if", TokenCode.IF);
         add("real", TokenCode.REAL);
         add("integer", TokenCode.INTEGER);
-        add("string", "A21");
-        add("boolean", "A22");
-        add("character", "A23");
-        add("void", "A24");
-        add("true", "A25");
-        add("false", "A26");
+        add("paramType", TokenCode.PARAM_TYPE);
+        add("print", TokenCode.PRINT);
+        add("program", TokenCode.PROGRAM);
+        add("return", TokenCode.RETURN);
+        add("string", TokenCode.STRING);
+        add("true", TokenCode.TRUE);
+        add("varType", TokenCode.VAR_TYPE);
+        add("void", TokenCode.VOID);
+        add("while", TokenCode.WHILE);
 
         add(";", TokenCode.SEMICOLON);
-        add(",", "B02");
-        add(":", "B03");
+        add(",", TokenCode.COMMA);
+        add(":", TokenCode.COLON);
         add(":=", TokenCode.ASSIGN);
-        add("?", "B05");
-        add("(", "B06");
-        add(")", "B07");
-        add("[", "B08");
-        add("]", "B09");
-        add("{", "B10");
-        add("}", "B11");
-        add("+", "B12");
-        add("-", "B13");
-        add("*", "B14");
-        add("/", "B15");
-        add("%", "B16");
-        add("==", "B17");
-        add("!=", "B18");
-        add("<", "B19");
-        add("<=", "B20");
-        add(">", "B21");
-        add(">=", "B22");
-        add("#", "B23");
+        add("?", TokenCode.QUESTION);
+        add("(", TokenCode.OPEN_PAREN);
+        add(")", TokenCode.CLOSE_PAREN);
+        add("[", TokenCode.OPEN_BRACKET);
+        add("]", TokenCode.CLOSE_BRACKET);
+        add("{", TokenCode.OPEN_BRACE);
+        add("}", TokenCode.CLOSE_BRACE);
+        add("+", TokenCode.PLUS);
+        add("-", TokenCode.MINUS);
+        add("*", TokenCode.MULTIPLY);
+        add("/", TokenCode.DIVIDE);
+        add("%", TokenCode.MODULO);
+        add("==", TokenCode.EQUAL);
+        add("!=", TokenCode.NOT_EQUAL);
+        add("#", TokenCode.NOT_EQUAL);
+        add("<", TokenCode.LESS);
+        add("<=", TokenCode.LESS_EQUAL);
+        add(">", TokenCode.GREATER);
+        add(">=", TokenCode.GREATER_EQUAL);
     }
 
     private void add(String lexeme, String code) {

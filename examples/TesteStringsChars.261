@@ -1,0 +1,14 @@
+program Textos
+
+declarations
+varType string: frase;
+varType character: letra;
+endDeclararions
+
+frase := "OLA MUNDO";
+frase := "CODIGO_$._2026";
+letra := 'a';
+letra := 'Z';
+print frase
+
+endProgram

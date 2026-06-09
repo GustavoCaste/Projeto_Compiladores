@@ -1,0 +1,17 @@
+program Comentarios
+
+// comentario de linha antes das declaracoes
+declarations
+/*
+   comentario de bloco fechado
+   com duas linhas internas
+*/
+varType integer: x;
+endDeclararions
+
+x := 1;
+// comentario de linha no fim do trecho util
+
+/* comentario de bloco sem fechamento
+print x
+endProgram

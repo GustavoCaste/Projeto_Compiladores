@@ -1,0 +1,19 @@
+program Basico
+
+declarations
+varType integer: contador, contador;
+varType real: salario;
+endDeclararions
+
+contador := 10;
+salario := 123.45e-2;
+
+if contador != 0
+    print "OK"
+else
+    print "FALSO"
+endIf;
+
+# == <= >= := ; , : ? ( ) [ ] { } + - * / %
+
+endProgram

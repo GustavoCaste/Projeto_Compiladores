@@ -32,7 +32,7 @@ public class Main {
             LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(reservedTable, symbolTable);
 
             List<Token> tokens = lexicalAnalyzer.analyze(sourceContent);
-            System.out.println("Analise lexica inicial executada. Tokens: " + tokens.size());
+            System.out.println("Analise lexica executada. Tokens: " + tokens.size());
 
             LexReportWriter lexReportWriter = new LexReportWriter();
             Path lexPath = lexReportWriter.write(sourceFile, sourceContent, tokens);

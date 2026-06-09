@@ -1,0 +1,11 @@
+program MisturaCase
+
+declarations
+varType integer: IdentificadorComMaisDeTrintaCaracteresValidosABC123;
+varType string: textoLongo;
+endDeclararions
+
+identificadorcommAisdetRintacaracteresvalidosabc123 := 12345678901234567890123456789012345;
+textoLongo := "ABCDEFGHIJ ABCDEFGHIJ ABCDEFGHIJ ABCDEFGHIJ";
+
+endProgram

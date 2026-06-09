@@ -21,12 +21,18 @@ public class SymbolTable {
     }
 
     public SymbolEntry addOrGet(String lexeme, String code, int line) {
+        return addOrGet(lexeme, code, line, safeLength(lexeme), "-");
+    }
+
+    public SymbolEntry addOrGet(String lexeme, String code, int line, int charsBeforeTrunc, String symbolType) {
         String truncatedLexeme = truncateLexeme(lexeme);
-        String key = normalizeKey(truncatedLexeme);
+        int safeCharsBeforeTrunc = Math.max(charsBeforeTrunc, truncatedLexeme.length());
+        String key = buildKey(truncatedLexeme, code);
 
         SymbolEntry existing = indexByLexeme.get(key);
         if (existing != null) {
             existing.addLine(line);
+            existing.updateSymbolType(symbolType);
             return existing;
         }
 
@@ -35,9 +41,9 @@ public class SymbolTable {
                 index,
                 code,
                 truncatedLexeme,
-                lexeme.length(),
+                safeCharsBeforeTrunc,
                 truncatedLexeme.length(),
-                "-",
+                normalizeSymbolType(symbolType),
                 line
         );
         entries.add(created);
@@ -47,7 +53,13 @@ public class SymbolTable {
 
     public SymbolEntry findByLexeme(String lexeme) {
         String truncatedLexeme = truncateLexeme(lexeme);
-        return indexByLexeme.get(normalizeKey(truncatedLexeme));
+        String normalizedLexeme = normalizeKey(truncatedLexeme);
+        for (Map.Entry<String, SymbolEntry> entry : indexByLexeme.entrySet()) {
+            if (entry.getKey().endsWith("|" + normalizedLexeme)) {
+                return entry.getValue();
+            }
+        }
+        return null;
     }
 
     public List<SymbolEntry> getAll() {
@@ -61,11 +73,25 @@ public class SymbolTable {
         if (lexeme.length() <= LEXEME_MAX_SIZE) {
             return lexeme;
         }
-        // TODO: Reforcar regra oficial de truncamento apos implementar validacao completa de atomos.
         return lexeme.substring(0, LEXEME_MAX_SIZE);
+    }
+
+    private int safeLength(String lexeme) {
+        return lexeme == null ? 0 : lexeme.length();
+    }
+
+    private String buildKey(String lexeme, String code) {
+        return (code == null ? "" : code) + "|" + normalizeKey(lexeme);
     }
 
     private String normalizeKey(String lexeme) {
         return lexeme.toUpperCase(Locale.ROOT);
+    }
+
+    private String normalizeSymbolType(String symbolType) {
+        if (symbolType == null || symbolType.isBlank()) {
+            return "-";
+        }
+        return symbolType;
     }
 }

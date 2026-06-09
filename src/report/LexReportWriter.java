@@ -20,10 +20,14 @@ public class LexReportWriter {
             writer.newLine();
             writer.write("Componentes: ");
             writer.newLine();
+            writer.write("Contatos: ");
+            writer.newLine();
             writer.write("RELATORIO DA ANALISE LEXICA");
             writer.newLine();
             writer.newLine();
-            writer.write("Texto fonte analisado:");
+            writer.write("Nome do texto fonte analisado: " + sourceFile.getFileName());
+            writer.newLine();
+            writer.write("Conteudo do texto fonte analisado:");
             writer.newLine();
             writer.write(sourceContent == null ? "" : sourceContent);
             writer.newLine();
@@ -33,25 +37,25 @@ public class LexReportWriter {
             writer.newLine();
 
             if (tokens == null || tokens.isEmpty()) {
-                writer.write("Analise lexica completa ainda sera implementada.");
+                writer.write("Nenhum token encontrado.");
                 writer.newLine();
             } else {
-                writer.write(String.format("%-20s %-8s %-8s %-6s", "LEXEME", "CODIGO", "TAB_IDX", "LINHA"));
-                writer.newLine();
                 for (Token token : tokens) {
-                    writer.write(String.format(
-                            "%-20s %-8s %-8d %-6d",
-                            token.getLexeme(),
-                            token.getCode(),
-                            token.getSymbolTableIndex(),
-                            token.getLine()
-                    ));
+                    writer.write("Lexeme: " + token.getLexeme()
+                            + ", Codigo: " + token.getCode()
+                            + ", indiceTabSimb: " + formatSymbolTableIndex(token.getSymbolTableIndex())
+                            + ", Linha: " + token.getLine()
+                            + ".");
                     writer.newLine();
                 }
             }
         }
 
         return outputPath;
+    }
+
+    private String formatSymbolTableIndex(int symbolTableIndex) {
+        return symbolTableIndex < 0 ? "-" : String.valueOf(symbolTableIndex);
     }
 
     private Path buildOutputPath(Path sourceFile, String newExtension) {

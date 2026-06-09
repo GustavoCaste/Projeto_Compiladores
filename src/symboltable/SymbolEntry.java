@@ -12,7 +12,7 @@ public class SymbolEntry {
     private final String lexeme;
     private final int charsBeforeTrunc;
     private final int charsAfterTrunc;
-    private final String symbolType;
+    private String symbolType;
     private final List<Integer> lines;
 
     public SymbolEntry(
@@ -56,6 +56,15 @@ public class SymbolEntry {
 
     public String getSymbolType() {
         return symbolType;
+    }
+
+    public void updateSymbolType(String newSymbolType) {
+        if (newSymbolType == null || newSymbolType.isBlank() || "-".equals(newSymbolType)) {
+            return;
+        }
+        if (symbolType == null || symbolType.isBlank() || "-".equals(symbolType)) {
+            symbolType = newSymbolType;
+        }
     }
 
     public List<Integer> getLines() {

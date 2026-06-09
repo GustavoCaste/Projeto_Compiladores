@@ -1,0 +1,11 @@
+program MeuPrograma
+
+declarations
+varType integer: idade, contador;
+varType real: salario;
+varType string: nome;
+varType character: inicial;
+varType boolean: ativo;
+endDeclararions
+
+endProgram

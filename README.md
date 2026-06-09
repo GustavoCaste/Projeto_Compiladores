@@ -2,11 +2,12 @@
 
 Projeto academico da disciplina Compiladores para construir, em etapas, um Static Checker da linguagem Klebao2026-1.
 
-Neste primeiro passo, o repositorio contem a estrutura inicial em Java puro (JDK 17), com:
+O repositorio contem a estrutura em Java puro (JDK 17), com:
 
 - Leitura de arquivo-fonte `.261`
-- Inicializacao de tabelas basicas
-- Fluxo inicial do analisador lexico (ainda incompleto)
+- Tabela de palavras e simbolos reservados
+- Analisador lexico caractere a caractere
+- Tabela de simbolos com truncagem de 30 caracteres
 - Geracao de relatorios `.LEX` e `.TAB`
 
 ## Tecnologias
@@ -39,18 +40,24 @@ src/
 
 examples/
   MeuTeste.261
+  TesteBasico.261
+  TestePrograma.261
+  TesteCompletoInicial.261
+  TesteComentarios.261
+  TesteStringsChars.261
+  TesteTruncagem.261
 ```
 
 ## Como compilar (PowerShell)
 
 ```powershell
-javac -d out (Get-ChildItem -Recurse src -Filter *.java | ForEach-Object { $_.FullName })
+javac --release 17 -d out (Get-ChildItem -Recurse src -Filter *.java | ForEach-Object { $_.FullName })
 ```
 
-Comando alternativo (quando suportado no ambiente):
+Sem validar o alvo Java 17 explicitamente:
 
 ```powershell
-javac -d out (Get-ChildItem -Recurse src/*.java)
+javac -d out (Get-ChildItem -Recurse src -Filter *.java | ForEach-Object { $_.FullName })
 ```
 
 ## Como executar
@@ -60,6 +67,8 @@ Executando com argumento:
 ```powershell
 java -cp out Main examples/MeuTeste
 ```
+
+O programa adiciona `.261` automaticamente quando a extensao nao for informada. Tambem aceita caminho relativo ou absoluto.
 
 Ou sem argumento (o programa pedira no console):
 
@@ -78,5 +87,5 @@ Os dois arquivos sao criados na mesma pasta do arquivo `.261` informado.
 
 ## Observacoes
 
-- A analise lexica completa ainda nao esta implementada.
-- Ha `TODO`s no codigo para as proximas etapas (regras lexicas, codigos oficiais, validacoes adicionais).
+- O projeto implementa a etapa lexica e os relatorios exigidos para essa etapa.
+- Nao ha Maven, Gradle ou bibliotecas externas.

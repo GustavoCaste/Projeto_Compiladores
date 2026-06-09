@@ -1,21 +1,24 @@
-program MeuPrograma
+program Completo2026
 
 declarations
 varType integer: idade, contador;
 varType real: salario;
 varType string: nome;
+varType character: inicial;
 varType boolean: ativo;
 endDeclararions
 
 functions
-funcType void: minhaFuncao(?)
+funcType void: processar(?)
 {
+    paramType integer: valor;
     idade := 25;
-    salario := 1500.75;
-    nome := "JOAO";
+    salario := 1500.75e+2;
+    nome := "JOAO SILVA";
+    inicial := 'J';
     ativo := true;
 
-    // comentario de linha para testar filtro futuro
+    // comentario de linha
 
     if (idade >= 18)
         print nome
@@ -30,6 +33,9 @@ funcType void: minhaFuncao(?)
 
     while (contador < 10)
         contador := contador + 1
+        if (contador == 5)
+            break
+        endIf
     endWhile;
 
     return
