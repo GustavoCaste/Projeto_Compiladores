@@ -3,7 +3,6 @@ package lexer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import reserved.ReservedTable;
 import symboltable.SymbolEntry;
 import symboltable.SymbolTable;
