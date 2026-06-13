@@ -29,12 +29,24 @@ public class LexReportWriter {
                 writer.write("Nenhum token encontrado.");
                 writer.newLine();
             } else {
+                int maxLexeme = "Lexeme: ".length();
+                int maxCodigo = "Codigo: ".length();
+                int maxIndice = "indiceTabSimb: ".length();
+
                 for (Token token : tokens) {
-                    writer.write("Lexeme: " + token.getLexeme()
-                            + ", Codigo: " + token.getCode()
-                            + ", indiceTabSimb: " + formatSymbolTableIndex(token.getSymbolTableIndex())
-                            + ", Linha: " + token.getLine()
-                            + ".");
+                    maxLexeme = Math.max(maxLexeme, "Lexeme: ".length()        + token.getLexeme().length());
+                    maxCodigo = Math.max(maxCodigo, "Codigo: ".length()        + token.getCode().length());
+                    maxIndice = Math.max(maxIndice, "indiceTabSimb: ".length() + formatSymbolTableIndex(token.getSymbolTableIndex()).length());
+                }
+
+                String fmt = "%-" + maxLexeme + "s, %-" + maxCodigo + "s, %-" + maxIndice + "s, Linha: %s.";
+
+                for (Token token : tokens) {
+                    String colLexeme = "Lexeme: "        + token.getLexeme();
+                    String colCodigo = "Codigo: "        + token.getCode();
+                    String colIndice = "indiceTabSimb: " + formatSymbolTableIndex(token.getSymbolTableIndex());
+
+                    writer.write(String.format(fmt, colLexeme, colCodigo, colIndice, token.getLine()));
                     writer.newLine();
                 }
             }
