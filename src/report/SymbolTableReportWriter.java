@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import symboltable.SymbolEntry;
 
 // Gera o arquivo .TAB com cabecalho e listagem da tabela de simbolos.
@@ -17,17 +16,7 @@ public class SymbolTableReportWriter {
         Path outputPath = buildOutputPath(sourceFile, ".TAB");
 
         try (BufferedWriter writer = Files.newBufferedWriter(outputPath, StandardCharsets.UTF_8)) {
-            writer.write("Codigo da Equipe: E__");
-            writer.newLine();
-            writer.write("Componentes: ");
-            writer.newLine();
-            writer.write("Contatos: ");
-            writer.newLine();
-            writer.write("RELATORIO DA TABELA DE SIMBOLOS");
-            writer.newLine();
-            writer.newLine();
-            writer.write("Nome do texto fonte analisado: " + sourceFile.getFileName());
-            writer.newLine();
+            ReportHeader.write(writer, "Tabela de Símbolos (.TAB)", sourceFile);
             writer.write("Conteudo do texto fonte analisado:");
             writer.newLine();
             writer.write(sourceContent == null ? "" : sourceContent);
