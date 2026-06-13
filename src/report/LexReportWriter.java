@@ -6,7 +6,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
 import lexer.Token;
 
 // Gera o arquivo .LEX com cabecalho e listagem de tokens.
@@ -16,17 +15,7 @@ public class LexReportWriter {
         Path outputPath = buildOutputPath(sourceFile, ".LEX");
 
         try (BufferedWriter writer = Files.newBufferedWriter(outputPath, StandardCharsets.UTF_8)) {
-            writer.write("Codigo da Equipe: E__");
-            writer.newLine();
-            writer.write("Componentes: ");
-            writer.newLine();
-            writer.write("Contatos: ");
-            writer.newLine();
-            writer.write("RELATORIO DA ANALISE LEXICA");
-            writer.newLine();
-            writer.newLine();
-            writer.write("Nome do texto fonte analisado: " + sourceFile.getFileName());
-            writer.newLine();
+            ReportHeader.write(writer, "Análise Léxica (.LEX)", sourceFile);
             writer.write("Conteudo do texto fonte analisado:");
             writer.newLine();
             writer.write(sourceContent == null ? "" : sourceContent);
