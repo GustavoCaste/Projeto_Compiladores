@@ -78,9 +78,7 @@ public class SymbolEntry {
         if (lines.size() >= 5) {
             return;
         }
-        if (!lines.contains(line)) {
-            lines.add(line);
-        }
+        lines.add(line);
     }
 
     @Override
