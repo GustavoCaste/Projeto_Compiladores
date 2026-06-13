@@ -22,13 +22,13 @@ public final class ReportHeader {
         writer.newLine();
         writer.write("Integrantes:");
         writer.newLine();
-        writer.write("FILIPE MIRANDA DE OLIVEIRA — (71) 99103-1020 — e-mail: __________________");
+        writer.write("FILIPE MIRANDA DE OLIVEIRA — (71) 99103-1020 — e-mail: filipemiranda.oliveira@ucsal.edu.br");
         writer.newLine();
-        writer.write("GUSTAVO CASTELLUCIO DA COSTA LIMA — (71) 99681-5124 — e-mail: __________________");
+        writer.write("GUSTAVO CASTELLUCIO DA COSTA LIMA — (71) 99681-5124 — e-mail: gustavo.lima@ucsal.edu.br");
         writer.newLine();
-        writer.write("LEONARDO BRITTO DA SILVA — (71) 99969-0054 — e-mail: __________________");
+        writer.write("LEONARDO BRITTO DA SILVA — (71) 99969-0054 — e-mail: leonardob.silva@ucsal.edu.br");
         writer.newLine();
-        writer.write("LUCCA BARBOSA NYGAARD — (71) 99680-1901 — e-mail: __________________");
+        writer.write("LUCCA BARBOSA NYGAARD — (71) 99680-1901 — e-mail: lucca.nygaard@ucsal.edu.br");
         writer.newLine();
         writer.newLine();
     }
