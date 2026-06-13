@@ -21,9 +21,13 @@ public class LexicalAnalyzer {
     private boolean expectProgramName;
     private FuncContext funcContext;
     private VarContext varContext;
+    private ParamContext paramContext;
     private String pendingVarType;
     private boolean pendingVarArray;
     private String activeDeclarationType;
+    private String pendingFunctionType;
+    private String pendingParamType;
+    private String activeParameterType;
 
     public LexicalAnalyzer(ReservedTable reservedTable, SymbolTable symbolTable) {
         this.reservedTable = reservedTable;
@@ -69,7 +73,10 @@ public class LexicalAnalyzer {
         line = 1;
         expectProgramName = false;
         funcContext = FuncContext.NONE;
+        paramContext = ParamContext.NONE;
+        pendingFunctionType = "-";
         resetVarContext();
+        resetParamContext();
     }
 
     private void scanWord(List<Token> tokens, int tokenLine) {
@@ -95,10 +102,23 @@ public class LexicalAnalyzer {
         }
 
         String code = classifyIdentifier(text);
-        String symbolType = TokenCode.VARIABLE.equals(code) && VarContext.IN_DECLARATION.equals(varContext)
-                ? activeDeclarationType
-                : "-";
+        String symbolType = resolveSymbolType(code);
         addSymbolToken(tokens, text, code, tokenLine, lexeme.validLength(), symbolType);
+    }
+
+    private String resolveSymbolType(String code) {
+        if (TokenCode.FUNCTION_NAME.equals(code) && FuncContext.EXPECT_NAME.equals(funcContext)) {
+            return pendingFunctionType;
+        }
+        if (TokenCode.VARIABLE.equals(code)) {
+            if (VarContext.IN_DECLARATION.equals(varContext)) {
+                return activeDeclarationType;
+            }
+            if (ParamContext.IN_DECLARATION.equals(paramContext)) {
+                return activeParameterType;
+            }
+        }
+        return "-";
     }
 
     private String classifyIdentifier(String lexeme) {
@@ -108,7 +128,6 @@ public class LexicalAnalyzer {
         }
 
         if (FuncContext.EXPECT_NAME.equals(funcContext)) {
-            funcContext = FuncContext.NONE;
             return isProgramOrFunctionName(lexeme) ? TokenCode.FUNCTION_NAME : TokenCode.VARIABLE;
         }
 
@@ -268,6 +287,7 @@ public class LexicalAnalyzer {
         updateProgramContext(code);
         updateFunctionContext(code);
         updateVariableDeclarationContext(code);
+        updateParameterDeclarationContext(code);
     }
 
     private void updateProgramContext(String code) {
@@ -279,16 +299,32 @@ public class LexicalAnalyzer {
     private void updateFunctionContext(String code) {
         if (TokenCode.FUNC_TYPE.equals(code)) {
             funcContext = FuncContext.WAIT_TYPE;
+            pendingFunctionType = "-";
             return;
         }
 
         if (FuncContext.WAIT_TYPE.equals(funcContext)) {
-            funcContext = isTypeCode(code) ? FuncContext.WAIT_COLON : FuncContext.NONE;
+            if (isTypeCode(code)) {
+                pendingFunctionType = toSymbolType(code, false);
+                funcContext = FuncContext.WAIT_COLON;
+            } else {
+                funcContext = FuncContext.NONE;
+                pendingFunctionType = "-";
+            }
         } else if (FuncContext.WAIT_COLON.equals(funcContext)) {
             if (TokenCode.COLON.equals(code)) {
                 funcContext = FuncContext.EXPECT_NAME;
             } else if (!TokenCode.OPEN_BRACKET.equals(code) && !TokenCode.CLOSE_BRACKET.equals(code)) {
                 funcContext = FuncContext.NONE;
+                pendingFunctionType = "-";
+            }
+        } else if (FuncContext.EXPECT_NAME.equals(funcContext)) {
+            if (TokenCode.FUNCTION_NAME.equals(code)) {
+                funcContext = FuncContext.NONE;
+                pendingFunctionType = "-";
+            } else if (!TokenCode.OPEN_BRACKET.equals(code) && !TokenCode.CLOSE_BRACKET.equals(code)) {
+                funcContext = FuncContext.NONE;
+                pendingFunctionType = "-";
             }
         }
     }
@@ -332,6 +368,40 @@ public class LexicalAnalyzer {
         pendingVarType = null;
         pendingVarArray = false;
         activeDeclarationType = "-";
+    }
+
+    private void updateParameterDeclarationContext(String code) {
+        if (TokenCode.PARAM_TYPE.equals(code)) {
+            paramContext = ParamContext.WAIT_TYPE;
+            pendingParamType = null;
+            activeParameterType = "-";
+            return;
+        }
+
+        if (ParamContext.WAIT_TYPE.equals(paramContext)) {
+            if (isTypeCode(code)) {
+                pendingParamType = toSymbolType(code, false);
+                paramContext = ParamContext.WAIT_COLON;
+            } else {
+                resetParamContext();
+            }
+        } else if (ParamContext.WAIT_COLON.equals(paramContext)) {
+            if (TokenCode.COLON.equals(code)) {
+                activeParameterType = pendingParamType == null ? "-" : pendingParamType;
+                paramContext = ParamContext.IN_DECLARATION;
+            } else {
+                resetParamContext();
+            }
+        } else if (ParamContext.IN_DECLARATION.equals(paramContext)
+                && (TokenCode.SEMICOLON.equals(code) || TokenCode.CLOSE_PAREN.equals(code))) {
+            resetParamContext();
+        }
+    }
+
+    private void resetParamContext() {
+        paramContext = ParamContext.NONE;
+        pendingParamType = null;
+        activeParameterType = "-";
     }
 
     private String toSymbolType(String typeCode, boolean array) {
@@ -582,6 +652,13 @@ public class LexicalAnalyzer {
     }
 
     private enum VarContext {
+        NONE,
+        WAIT_TYPE,
+        WAIT_COLON,
+        IN_DECLARATION
+    }
+
+    private enum ParamContext {
         NONE,
         WAIT_TYPE,
         WAIT_COLON,
