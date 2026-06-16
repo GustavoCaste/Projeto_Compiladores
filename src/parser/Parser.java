@@ -193,6 +193,7 @@ public class Parser {
                 advance();
                 parseCommand();
             }
+            sub = Submachine.SUB02_COMMAND;
             expectCode(TokenCode.CLOSE_BRACE, "fim-bloco", "} ou ;");
         } else if (TokenCode.VARIABLE.equals(code)) {
             // atribuicao: variable [ '[' intConst ']' ] := LogicalExp
@@ -211,19 +212,24 @@ public class Parser {
             advance();
             expectCode(TokenCode.OPEN_PAREN, "if-abre", "(");
             parseLogicalExp();
+            sub = Submachine.SUB02_COMMAND;
             expectCode(TokenCode.CLOSE_PAREN, "if-fecha", ")");
             parseCommand();
+            sub = Submachine.SUB02_COMMAND;
             if (matchCode(TokenCode.ELSE)) {
                 advance();
                 parseCommand();
             }
+            sub = Submachine.SUB02_COMMAND;
             expectCode(TokenCode.END_IF, "fim-if", "endIf ou else");
         } else if (TokenCode.WHILE.equals(code)) {
             advance();
             expectCode(TokenCode.OPEN_PAREN, "while-abre", "(");
             parseLogicalExp();
+            sub = Submachine.SUB02_COMMAND;
             expectCode(TokenCode.CLOSE_PAREN, "while-fecha", ")");
             parseCommand();
+            sub = Submachine.SUB02_COMMAND;
             expectCode(TokenCode.END_WHILE, "fim-while", "endWhile");
         } else if (TokenCode.RETURN.equals(code)) {
             advance();
