@@ -1,0 +1,16 @@
+program TesteErro
+declarations
+varType integer: x;
+endDeclararions
+functions
+funcType void: processar(paramType integer: valor)
+{
+    x := 10;
+    if (x > 5)
+    {
+        print "OK"
+    }
+}
+endFunction
+endFunctions
+endProgram
