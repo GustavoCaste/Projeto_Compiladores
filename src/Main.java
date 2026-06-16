@@ -3,6 +3,9 @@ import java.util.List;
 import java.util.Scanner;
 import lexer.LexicalAnalyzer;
 import lexer.Token;
+import parser.ParseResult;
+import parser.Parser;
+import parser.TokenStream;
 import report.LexReportWriter;
 import report.SymbolTableReportWriter;
 import reserved.ReservedTable;
@@ -43,6 +46,16 @@ public class Main {
             System.out.println("Relatorios gerados com sucesso:");
             System.out.println(" - " + lexPath);
             System.out.println(" - " + tabPath);
+
+            // Analise sintatica sobre os tokens ja gerados. Os relatorios .LEX
+            // e .TAB ja foram escritos acima, entao um erro sintatico nao os afeta.
+            Parser parser = new Parser(new TokenStream(tokens));
+            ParseResult parseResult = parser.parse();
+            if (parseResult.isSuccess()) {
+                System.out.println("Analise sintatica executada com sucesso.");
+            } else {
+                System.out.println(parseResult.getMessage());
+            }
         } catch (Exception e) {
             System.err.println("Erro ao executar o fluxo inicial: " + e.getMessage());
             System.exit(1);
