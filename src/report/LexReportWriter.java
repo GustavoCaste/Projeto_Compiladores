@@ -15,7 +15,7 @@ public class LexReportWriter {
         Path outputPath = buildOutputPath(sourceFile, ".LEX");
 
         try (BufferedWriter writer = Files.newBufferedWriter(outputPath, StandardCharsets.UTF_8)) {
-            ReportHeader.write(writer, "Análise Léxica (.LEX)", sourceFile);
+            ReportHeader.write(writer, "RELATÓRIO DA ANÁLISE LÉXICA", sourceFile);
             writer.write("Conteudo do texto fonte analisado:");
             writer.newLine();
             writer.write(sourceContent == null ? "" : sourceContent);

@@ -16,7 +16,7 @@ public class SymbolTableReportWriter {
         Path outputPath = buildOutputPath(sourceFile, ".TAB");
 
         try (BufferedWriter writer = Files.newBufferedWriter(outputPath, StandardCharsets.UTF_8)) {
-            ReportHeader.write(writer, "Tabela de Símbolos (.TAB)", sourceFile);
+            ReportHeader.write(writer, "RELATÓRIO DA TABELA DE SÍMBOLOS", sourceFile);
             writer.write("Conteudo do texto fonte analisado:");
             writer.newLine();
             writer.write(sourceContent == null ? "" : sourceContent);
@@ -53,7 +53,7 @@ public class SymbolTableReportWriter {
                 for (SymbolEntry entry : symbols) {
                     String linhas = entry.getLines().stream()
                             .map(String::valueOf)
-                            .collect(Collectors.joining(","));
+                            .collect(Collectors.joining(", "));
 
                     String colEntrada = "Entrada: "           + entry.getIndex();
                     String colCodigo  = "Codigo: "            + entry.getCode();
