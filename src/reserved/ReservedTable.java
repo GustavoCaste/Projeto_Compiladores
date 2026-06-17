@@ -30,8 +30,7 @@ public class ReservedTable {
         add("character", TokenCode.CHARACTER);
         add("declarations", TokenCode.DECLARATIONS);
         add("else", TokenCode.ELSE);
-        add("endDeclararions", TokenCode.END_DECLARATIONS);
-        add("endDeclaracions", TokenCode.END_DECLARATIONS);
+        add("endDeclararions", TokenCode.END_DECLARATIONS); // alias com erro ortografico presente nos arquivos de teste
         add("endDeclarations", TokenCode.END_DECLARATIONS);
         add("endFunction", TokenCode.END_FUNCTION);
         add("endFunctions", TokenCode.END_FUNCTIONS);
