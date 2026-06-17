@@ -10,7 +10,7 @@ public class SymbolEntry {
     private final int index;
     private final String code;
     private final String lexeme;
-    private final int charsBeforeTrunc;
+    private int charsBeforeTrunc;
     private final int charsAfterTrunc;
     private String symbolType;
     private final List<Integer> lines;
@@ -64,6 +64,13 @@ public class SymbolEntry {
         }
         if (symbolType == null || symbolType.isBlank() || "-".equals(symbolType)) {
             symbolType = newSymbolType;
+        }
+    }
+
+    // Atualiza para o maior valor visto entre aparicoes (sem contar invalidos; aspas contam).
+    public void updateCharsBeforeTrunc(int newValue) {
+        if (newValue > charsBeforeTrunc) {
+            charsBeforeTrunc = newValue;
         }
     }
 

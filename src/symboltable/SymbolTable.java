@@ -33,6 +33,7 @@ public class SymbolTable {
         if (existing != null) {
             existing.addLine(line);
             existing.updateSymbolType(symbolType);
+            existing.updateCharsBeforeTrunc(safeCharsBeforeTrunc);
             return existing;
         }
 
