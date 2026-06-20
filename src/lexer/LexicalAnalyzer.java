@@ -213,6 +213,7 @@ public class LexicalAnalyzer {
 
         boolean closed = false;
         int letters = 0;
+        int content = 0;
         while (!isAtEnd()) {
             char c = current();
             if (c == '\'') {
@@ -224,6 +225,7 @@ public class LexicalAnalyzer {
             if (isLineBreak(c)) {
                 break;
             }
+            content++;
             if (isAsciiLetter(c)) {
                 letters++;
                 lexeme.appendUpper(c);
@@ -231,7 +233,9 @@ public class LexicalAnalyzer {
             advance();
         }
 
-        if (closed && letters == 1) {
+        // charConst valido = exatamente um caractere entre aspas e esse caractere e uma letra.
+        // Qualquer caractere extra no meio (valido ou invalido) invalida o token.
+        if (closed && content == 1 && letters == 1) {
             addSymbolToken(tokens, lexeme.text(), TokenCode.CHAR_CONST, tokenLine, lexeme.validLength(), "-");
         }
     }
